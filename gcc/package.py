@@ -30,6 +30,8 @@ def pre_build_commands():
         f"gcc-{this.version}/configure --prefix={path} "
         f"--enable-languages=c,c++"
     )
+    env.MAKE_COMMAND = "make -j 4"
+    env.MAKE_INSTALL_COMMAND = "make install -j 4"
 
 
 build_command = """
@@ -39,6 +41,12 @@ echo $CD_REPO
 $CD_REPO
 echo $CHECKOUT_COMMAND
 $CHECKOUT_COMMAND
+echo $CONFIGURE_COMMAND
+$CONFIGURE_COMMAND
+echo $MAKE_COMMAND
+$MAKE_COMMAND
+echo $MAKE_INSTALL_COMMAND
+$MAKE_INSTALL_COMMAND
 """
 
 
