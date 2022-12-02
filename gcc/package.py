@@ -20,33 +20,42 @@ def variants():
 
 
 def pre_build_commands():
-    env.PULL_COMMAND = "git clone git://gcc.gnu.org/git/gcc.git"
-    env.CD_REPO = "cd gcc"
-    env.CHECKOUT_COMMAND = f"git checkout releases/gcc-{this.version}"
+    env.DOWNLOAD = (
+        f"wget https://ftp.gnu.org/gnu/gcc/gcc-${this.version}/"
+        f"gcc-${this.version}.tar.gz"
+    )
+    env.UNTAR = f"tar xzvf gcc-{this.version}.tar.gz"
+    env.MKDIR_OBJ = f"mkdir obj.gcc-{this.version}"
+    env.PREREQS = f"cd gcc-{this.version} && ./contrib/download_prerequisites"
+
     path = build.build_path
     if build.install:
         path = build.install_path
-    env.CONFIGURE_COMMAND = (
-        f"gcc/configure --prefix={path} "
+
+    env.CONFIGURE = (
+        f"cd ../obj-gcc-{this.version} && "
+        f"../gcc-{this.version}/configure --prefix={path} "
         f"--enable-languages=c,c++"
     )
-    env.MAKE_COMMAND = "make -j 4"
-    env.MAKE_INSTALL_COMMAND = "make install -j 4"
+    env.MAKE = "make -j 4"
+    env.INSTALL = "make install -j 4"
 
 
 build_command = """
-echo $PULL_COMMAND
-$PULL_COMMAND
-echo $CD_REPO
-$CD_REPO
-echo $CHECKOUT_COMMAND
-$CHECKOUT_COMMAND
-echo $CONFIGURE_COMMAND
-$CONFIGURE_COMMAND
-echo $MAKE_COMMAND
-$MAKE_COMMAND
-echo $MAKE_INSTALL_COMMAND
-$MAKE_INSTALL_COMMAND
+echo $DOWNLOAD
+$DOWNLOAD
+echo $UNTAR
+$UNTAR
+echo $MKDIR_OBJ
+$MKDIR_OBJ
+echo $PREREQS
+$PREREQS
+echo $CONFIGURE
+$CONFIGURE
+echo $MAKE
+$MAKE
+echo $INSTALL
+$INSTALL
 """
 
 
