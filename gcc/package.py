@@ -25,14 +25,14 @@ def pre_build_commands():
         f"gcc-{this.version}.tar.gz"
     )
     env.UNTAR = f"tar xzvf gcc-{this.version}.tar.gz"
-    env.PREREQS = f"gcc-{this.version}/contrib/download_prerequisites"
+    env.PREREQS = f"cd gcc-{this.version} && ./contrib/download_prerequisites"
 
     path = build.build_path
     if build.install:
         path = build.install_path
 
     env.CONFIGURE = (
-        f"./gcc-{this.version}/configure --prefix={path} "
+        f"./configure --prefix={path} "
         f"--enable-languages=c,c++"
     )
     env.MAKE = "make -j 4"
