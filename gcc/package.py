@@ -21,8 +21,8 @@ def variants():
 
 def pre_build_commands():
     env.DOWNLOAD = (
-        f"wget https://ftp.gnu.org/gnu/gcc/gcc-${this.version}/"
-        f"gcc-${this.version}.tar.gz"
+        f"wget https://ftp.gnu.org/gnu/gcc/gcc-{this.version}/"
+        f"gcc-{this.version}.tar.gz"
     )
     env.UNTAR = f"tar xzvf gcc-{this.version}.tar.gz"
     env.MKDIR_OBJ = f"mkdir obj.gcc-{this.version}"
