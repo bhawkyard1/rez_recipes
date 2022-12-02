@@ -27,7 +27,7 @@ def pre_build_commands():
     if build.install:
         path = build.install_path
     env.CONFIGURE_COMMAND = (
-        f"gcc-{this.version}/configure --prefix={path} "
+        f"gcc/configure --prefix={path} "
         f"--enable-languages=c,c++"
     )
     env.MAKE_COMMAND = "make -j 4"
